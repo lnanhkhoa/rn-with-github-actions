@@ -1,0 +1,29 @@
+name: GitHub Actions Demo
+env:
+  DEFAULT_DEPLOYMENT_TARGET: Development
+  DEFAULT_FASTLANE_ACTION: deploy
+
+on: 
+  push:
+    branches:
+     - master
+
+  workflow_dispatch: 
+    inputs:
+      fastlaneAction:
+        type: choice
+        description: "Fastlane action task"
+        options: 
+          - build
+          - deploy
+        default: 'build'
+        required: true
+
+jobs:
+  android-build:
+    name: Android Build Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup_node
+    
